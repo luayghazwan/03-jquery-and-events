@@ -4,12 +4,12 @@ var articleView = {};
 articleView.populateFilters = function() {
   $('article').not('.template').each(function() {
     var authorName, category, optionTag;
-    authorName = $(this).find('address a').text();
+    authorName = $(this).find('address a').text(); //"this" here refers to the element in the array of article
     optionTag = '<option value="' + authorName + '">' + authorName + '</option>';
     $('#author-filter').append(optionTag);
     category = $(this).attr('data-category');
     optionTag = '<option value="' + category + '">' + category + '</option>';
-    if ($('#category-filter option[value="' + category + '"]').length === 0) {
+    if ($('#category-filter option[value="' + category + '"]').length === 0) { // if the jQuery object with 'category' option has no items then add the new category
       $('#category-filter').append(optionTag);
     }
   });
@@ -18,15 +18,19 @@ articleView.populateFilters = function() {
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
-      /* TODO: If the select box changes to an option that has a value, we should:
+      /* DONE: If the select box changes to an option that has a value, we should:
           1. Hide all of the articles
           2. Fade in only the articles that match based on on the author
             that was aselected. Hint: use an attribute selector to find
             those articles that match the value, and then fade them in.
         */
+      $('#articles article').hide();
+      $('article[data-author="' + $(this).val() + '"]').fadeIn(); // find articles that have attribute of data-author that matches the selection value
     } else {
     /* Otherwise, we should:
         1. Show all the articles except the template */
+        $('#articles article').show();
+        $('article.template').hide();
     }
     $('#category-filter').val('');
   });
