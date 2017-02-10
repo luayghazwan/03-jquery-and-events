@@ -9,7 +9,7 @@ articleView.populateFilters = function() {
     $('#author-filter').append(optionTag);
     category = $(this).attr('data-category');
     optionTag = '<option value="' + category + '">' + category + '</option>';
-    if ($('#category-filter option[value="' + category + '"]').length === 0) { // if the jQuery object with 'category' option has no items then add the new category
+    if ($('#category-filter option[value="' + category + '"]').length === 0) { // if the jQuery object with 'category' option exist, don't append a duplicate <option>, otherwise append it!
       $('#category-filter').append(optionTag);
     }
   });
@@ -69,7 +69,7 @@ articleView.handleMainNav = function () {
 articleView.setTeasers = function() {
   // Truncate logic to show only first two elements within the article body.
   $('.article-body *:nth-of-type(n+2)').hide();
-  /* TODO: Add a delegated event handler to reveal the remaining paragraphs.
+  /* DONE: Add a delegated event handler to reveal the remaining paragraphs.
     When a .read-on link is clicked, we can:
     1. Prevent the default action of a link.
     2. Reveal everything in that particular article now.
@@ -79,4 +79,8 @@ articleView.setTeasers = function() {
   */
 };
 
-// TODO: Invoke all of the above functions (I mean, methods!):
+// DONE: Invoke all of the above functions (I mean, methods!):
+articleView.populateFilters();
+articleView.handleAuthorFilter();
+articleView.handleCategoryFilter();
+articleView.handleMainNav();
